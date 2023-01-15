@@ -33,11 +33,6 @@ body {
   gap: 10px;
 }
 
-.flag {
-  display: block;
-  width: 100px;
-
-}
 
 .card{
   list-style: none;
