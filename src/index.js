@@ -17,7 +17,6 @@ function onInput() {
 
   Countries.fetchCountries(name)
     .then(data => {
-      console.log(data);
       if (data.length > 10) {
         reset();
         Notiflix.Notify.info(
