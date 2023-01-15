@@ -17,45 +17,51 @@ function onInput() {
 
   Countries.fetchCountries(name).then(data => {
     console.log(data);
-    if (data.length > 10) {
+      if (data.length > 10) {
+          clearFields();
       Notiflix.Notify.info(
         'Too many matches found. Please enter a more specific name.'
-        )
-      };
+      );
+    }
     if (data.length <= 10 && data.length >= 2) {
       createList(data);
-      };
-      if (data.length === 1) {
-        createBox(data[0])
-    }      
+    }
+    if (data.length === 1) {
+      createBox(data[0]);
+    }
   });
 
   console.log(`${BASE_URL}${name}`);
 }
 
 function createList(arr) {
-    clearFields();
+  clearFields();
   list.innerHTML = arr
-    .map(country => 
-      `<li class = "country-item">
+    .map(
+      country =>
+        `<li class = "country-item">
       <img src = "${country.flags.svg}" width = "40px" alt = "${country.name}">
       <h3>${country.name.common}</h3>
-    </li>`)
+    </li>`
+    )
     .join('');
 }
 
 function createBox(obj) {
     clearFields();
-    box.innerHTML = `<img src="${obj.flags.svg}" alt="${obj.name}">
-    <h3>${obj.name}</h3>
+    const { name: { official: offName, common: comName }, capital, population, flags, languages } = obj;
+    const langs = Object.values(languages).join(",")
+
+  box.innerHTML = `<img src="${flags.svg}" alt="${comName}">
+    <h3>${offName}</h3>
     <ul>
-      <li><span>Capital: </span>${obj.capital}</li>
-      <li><span>Population: </span>${obj.population}</li>
-      <li><span>Languages: </span>${obj.languages}</li>
+      <li><span>Capital: </span>${capital}</li>
+      <li><span>Population: </span>${population}</li>
+      <li><span>Languages: </span>${langs}</li>
     </ul>`;
 }
 
 function clearFields() {
-    list.innerHTML = '';
-    box.innerHTML = '';
+  list.innerHTML = '';
+  box.innerHTML = '';
 }
