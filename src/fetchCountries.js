@@ -1,15 +1,10 @@
-import Notiflix from 'notiflix';
-
 function fetchCountries(value) {
   const BASE_URL = 'https://restcountries.com/v3.1/name/';
   const OPTIONS = '?fields=name,capital,population,flags,languages';
   return fetch(`${BASE_URL}${value}${OPTIONS}`).then(resp => {
     if (!resp.ok) {
-      throw new Error(
-        Notiflix.Notify.failure('Oops, there is no country with that name')
-      );
+      throw new Error(resp.status)      
     }
-    console.log(resp);
     return resp.json();
   });
 }
