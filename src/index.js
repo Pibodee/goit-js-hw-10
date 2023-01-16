@@ -12,9 +12,11 @@ const box = document.querySelector('.country-info');
 input.addEventListener('input', debounce(onInput, DEBOUNCE_DELAY));
 
 function onInput() {
-  const BASE_URL = 'https://restcountries.com/v3.1/name/';
   const name = input.value.trim();
-
+  if (!name) {
+    reset()
+    return
+  }
   Countries.fetchCountries(name)
     .then(data => {
       if (data.length > 10) {
